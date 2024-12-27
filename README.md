@@ -1,66 +1,153 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Task Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Important Notice
 
-## About Laravel
+[ **Security Notice:** The ".env" file contains sensitive environment variables and will **not** be uploaded to GitHub for security reasons. To ensure a smooth setup, I have copied the contents of the .env file into the ".env.example" file. Please make sure to create your own ".env" file locally with the appropriate credentials, such as database connection details and other sensitive environment variables.
+  
+- **Database:** The application requires a working MySQL database. I have migration folder inside of my database folder. You will find all my database table after migration.]
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+##
+A simple task management system built using HTML, Bootstrap, and AJAX, allowing users to manage their tasks efficiently through a user-friendly interface.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
+- Create, update, and delete tasks.
+- Mark tasks as complete or pending.
+- Use AJAX for seamless interactions without page reloads.
+- User authentication for secure access to task management features.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Approach
+This project was built using the following technologies:
+- **Frontend:** HTML, CSS, Bootstrap for responsive design, and JavaScript (AJAX) for dynamic user interactions.
+- **Backend:** The application uses XAMPP with MySQL to simulate the backend database.
+- **AJAX:** Allows real-time updates of task statuses and information without page reloads.
 
-## Learning Laravel
+### Database
+- The task management data is stored in a MySQL database, which you can set up using the `database_backup.sql` file included in this repository.
+- To import the database, you can use phpMyAdmin or the MySQL command line to import the `database_backup.sql` file.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## API Endpoints
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Here are the API endpoints used in the Task Management System:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. **POST /api/register**
+   - **Description:** Register a new user.
+   - **Request Body:**
+     json
+     {
+       "username": "newuser",
+       "email": "user@example.com",
+       "password": "password123"
+     }
 
-## Laravel Sponsors
+     
+   - **Response:**
+     json
+     {
+       "message": "User registered successfully",
+       "user": {
+         "id": 1,
+         "username": "newuser",
+         "email": "user@example.com"
+       }
+     }
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-### Premium Partners
+### 2. **POST /api/login**
+   - **Description:** Login an existing user.
+   - **Request Body:**
+     json
+     {
+       "email": "user@example.com",
+       "password": "password123"
+     }
+     
+   - **Response:**
+     json
+     {
+       "message": "Login successful",
+       "token": "sanctum_token_here" 
+     }
+     
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 3. **GET /api/tasks**
+   - **Description:** Retrieve a list of all tasks (requires authentication).
+   - **Headers:**
+     - Authorization: Bearer <sanctum_token>
+   - **Response:**
+     json
+     [
+       {
+         "id": 1,
+         "title": "Task 1",
+         "description": "Description of task 1",
+         "status": "pending"
+       },
+       {
+         "id": 2,
+         "title": "Task 2",
+         "description": "Description of task 2",
+         "status": "completed"
+       }
+     ]
+     
 
-## Contributing
+### 4. **POST /api/tasks**
+   - **Description:** Create a new task (requires authentication).
+   - **Headers:**
+     - `Authorization: Bearer <sanctum_token>`
+   - **Request Body:**
+     json
+     {
+       "title": "New Task",
+       "description": "This is a new task",
+       "status": "pending"
+     }
+     
+   - **Response:**
+     json
+     {
+       "message": "Task created successfully",
+       "task": {
+         "id": 3,
+         "title": "New Task",
+         "description": "This is a new task",
+         "status": "pending"
+       }
+     }
+     
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 5. **PUT /api/tasks/{id}**
+   - **Description:** Update an existing task by ID (requires authentication).
+   - **Headers:**
+     - Authorization: Bearer <sanctum_token>`
+   - **Request Body:**
+     json
+     {
+       "title": "Updated Task",
+       "description": "Updated description",
+       "status": "completed"
+     }
+     
+   - **Response:**
+     json
+     {
+       "message": "Task updated successfully"
+     }
+     
 
-## Code of Conduct
+### 6. **DELETE /api/tasks/{id}**
+   - **Description:** Delete a task by ID (requires authentication).
+   - **Headers:**
+     - Authorization: Bearer <sancutm_token>`
+   - **Response:**
+     json
+     {
+       "message": "Task deleted successfully"
+     }
+     
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Installation
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. Clone this repository:
+   bash
+   git clone https://github.com/Mazharul139/Task-Management-System.git
