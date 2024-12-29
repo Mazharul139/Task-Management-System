@@ -22,9 +22,8 @@ This project was built using the following technologies:
 - **AJAX:** Allows real-time updates of task statuses and information without page reloads.
 
 ### Database
-- The task management data is stored in a MySQL database, which you can set up using the `database_backup.sql` file included in this repository.
-- To import the database, you can use phpMyAdmin or the MySQL command line to import the `database_backup.sql` file.
 
+-  The application requires a working MySQL database. I have migration folder inside of my database folder. You will find all my database table after migration
 ## API Endpoints
 
 Here are the API endpoints used in the Task Management System:
